@@ -70,7 +70,7 @@ Start-Service wazuhsvc
 ```
 *   Confirm the agent status shows as active on the Wazuh web dashboard.
 
-![Visual verification: The Wazuh Agent 'windows-agent' is successfully registered and showing an 'active' status on the dashboard.](./images/wazuh-agent-active.png)
+
 
 ### Phase 4: Configuring File Integrity Monitoring (FIM)
 *   Edit the agent configuration file on the Windows endpoint (`C:\Program Files (x86)\ossec-agent\ossec.conf`).
@@ -92,17 +92,17 @@ Start-Service wazuhsvc
 *   **Reconnaissance:** Run an aggressive network scan from Kali against the Windows endpoint IP using `nmap`.
 *   **Brute-Force:** Simulate a password attack against the Windows RDP service using `hydra`.
 
-![Visual proof of the offensive simulation: The Kali Linux terminal running Hydra against the target Windows VM (192.168.64.4) using a custom password list.](./images/kali-hydra-attack.png)
+
 
 *   **Dashboard Verification:** Navigate to the Wazuh Threat Hunting dashboard to review incoming security events, confirming that authentication failures and network activity are successfully logged.
 
-![Visual confirmation: The Wazuh dashboard showing a significant spike in 'Authentication failure' alerts (Level 7) triggered during the Hydra simulation.](./images/wazuh-alerts-dashboard.png)
+
 
 ### Detailed Event Analysis
 
 A critical skill for any SOC analyst is the ability to drill down from the high-level dashboard view to the raw event log. By analyzing the detailed events, I was able to identify the specific Wazuh Rule ID triggered by the attack:
 
-![Deep dive: Wazuh event details revealing multiple 'Logon Failure - Unknown user or bad password' alerts, all categorized under Rule.id 60122. This granular view is essential for understanding the nature of the detected threat.](./images/wazuh-event-details.png)
+
 
 ---
 
