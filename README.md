@@ -2,11 +2,6 @@
 
 A hands-on SOC analyst home lab built from scratch on Apple Silicon using UTM for virtualization. Deploys a working SIEM, connects a monitored Windows endpoint, launches a real attack from a separate Kali Linux attacker VM, and verifies end-to-end detection on the Wazuh dashboard.
 
----
-
-## Why I built this
-
-I'm transitioning into a cybersecurity/SOC analyst role and wanted hands-on proof I can deploy, configure, and operate a real SIEM stack — not just talk about the theory.
 
 ---
 
@@ -75,6 +70,8 @@ Start-Service wazuhsvc
 ```
 *   Confirm the agent status shows as active on the Wazuh web dashboard.
 
+![Visual verification: The Wazuh Agent 'windows-agent' is successfully registered and showing an 'active' status on the dashboard.](./images/wazuh-agent-active.png)
+
 ### Phase 4: Configuring File Integrity Monitoring (FIM)
 *   Edit the agent configuration file on the Windows endpoint (`C:\Program Files (x86)\ossec-agent\ossec.conf`).
 *   Add a monitored directory block to track real-time changes:
@@ -94,7 +91,18 @@ Start-Service wazuhsvc
 ### Phase 6: Simulating Attacks & Verifying Detection
 *   **Reconnaissance:** Run an aggressive network scan from Kali against the Windows endpoint IP using `nmap`.
 *   **Brute-Force:** Simulate a password attack against the Windows RDP service using `hydra`.
-*   **Dashboard Verification:** Navigate to the Wazuh Threat Hunting dashboard to review incoming security events, confirming that authentication failures and network activity are successfully logged and categorized under rule groups like `authentication_failed`.
+
+![Visual proof of the offensive simulation: The Kali Linux terminal running Hydra against the target Windows VM (192.168.64.4) using a custom password list.](./images/kali-hydra-attack.png)
+
+*   **Dashboard Verification:** Navigate to the Wazuh Threat Hunting dashboard to review incoming security events, confirming that authentication failures and network activity are successfully logged.
+
+![Visual confirmation: The Wazuh dashboard showing a significant spike in 'Authentication failure' alerts (Level 7) triggered during the Hydra simulation.](./images/wazuh-alerts-dashboard.png)
+
+### Detailed Event Analysis
+
+A critical skill for any SOC analyst is the ability to drill down from the high-level dashboard view to the raw event log. By analyzing the detailed events, I was able to identify the specific Wazuh Rule ID triggered by the attack:
+
+![Deep dive: Wazuh event details revealing multiple 'Logon Failure - Unknown user or bad password' alerts, all categorized under Rule.id 60122. This granular view is essential for understanding the nature of the detected threat.](./images/wazuh-event-details.png)
 
 ---
 
@@ -114,7 +122,7 @@ Start-Service wazuhsvc
 *   Log source onboarding
 *   File Integrity Monitoring
 *   Attack simulation (reconnaissance + brute-force)
-*   Detection engineering fundamentals
+*   Detection engineering fundamentals (Rule ID analysis)
 *   Linux/Windows administration
 *   VM networking troubleshooting
 
