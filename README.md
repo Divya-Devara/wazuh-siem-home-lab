@@ -1,7 +1,7 @@
 # Wazuh SIEM Home Lab — Detecting an RDP Brute-Force Attack
 
 A hands-on SOC analyst home lab built from scratch on Apple Silicon using UTM for virtualization. Deploys a working SIEM, connects a monitored Windows endpoint, launches a real attack from a separate Kali Linux attacker VM, and verifies end-to-end detection on the Wazuh dashboard.
-
+ 
 
 ---
 
